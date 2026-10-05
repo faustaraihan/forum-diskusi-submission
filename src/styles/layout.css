@@ -1,0 +1,42 @@
+.site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1180px; padding: 0 34px; margin: auto; min-height: 86px; display: flex; align-items: center; gap: 72px; }
+.brand { display: flex; gap: 10px; align-items: center; text-decoration: none; font-size: 29px; font-weight: 750; letter-spacing: -1.5px; }
+.brand-mark { width: 39px; height: 39px; border-radius: 12px 12px 12px 3px; background: var(--accent); color: white; display: grid; place-items: center; }
+.brand-dot { color: var(--accent); }
+.main-nav { display: flex; gap: 30px; align-self: stretch; }
+.main-nav a { display: flex; gap: 8px; align-items: center; color: var(--muted); text-decoration: none; font-size: 14px; border-bottom: 3px solid transparent; padding-top: 3px; }
+.main-nav a.active { color: var(--accent); border-color: var(--accent); font-weight: 650; }
+.account-nav { margin-left: auto; display: flex; gap: 20px; align-items: center; }
+.login-link { font-size: 14px; text-decoration: none; font-weight: 600; }
+.account-user { display: flex; align-items: center; gap: 8px; font-size: 14px; max-width: 190px; }
+.account-user > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid var(--accent); background: var(--accent); color: white; padding: 12px 19px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; line-height: 1.4; min-height: 44px; }
+.button:hover { background: #174e32; }
+.button-small { padding: 9px 15px; }
+.button-secondary { background: var(--surface); color: var(--accent); }
+.button-secondary:hover { background: var(--accent-light); }
+.icon-button { background: transparent; border: 1px solid var(--line); color: var(--muted); border-radius: 8px; width: 42px; height: 42px; display: grid; place-items: center; }
+.site-main { max-width: 1180px; margin: auto; padding: 46px 34px 80px; min-height: calc(100vh - 180px); }
+.site-main:focus { outline: none; }
+.site-footer { max-width: 1112px; margin: auto; border-top: 1px solid var(--line); padding: 26px 0; display: flex; align-items: center; gap: 20px; color: var(--muted); font-size: 12px; }
+.site-footer > :last-child { margin-left: auto; }
+.footer-brand { font-weight: 750; color: var(--ink); font-size: 20px; letter-spacing: -1px; }
+.skip-link { position: fixed; top: -80px; left: 16px; background: var(--ink); color: white; padding: 14px; z-index: 30; }
+.skip-link:focus { top: 12px; }
+.progress-bar { height: 3px; width: 100%; background: var(--accent-light); position: fixed; top: 0; z-index: 50; overflow: hidden; }
+.progress-bar span { display: block; width: 40%; height: 100%; background: var(--accent); animation: progress 1.2s ease-in-out infinite; }
+@keyframes progress { from { transform: translateX(-100%); } to { transform: translateX(350%); } }
+.avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.avatar-large { width: 46px; height: 46px; }
+.avatar-fallback { display: inline-grid; place-items: center; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 700; }
+@media (max-width: 760px) {
+  .header-inner { gap: 20px; padding: 18px 20px 0; flex-wrap: wrap; min-height: 110px; }
+  .main-nav { order: 3; width: 100%; height: 44px; gap: 28px; }
+  .account-nav { gap: 12px; }
+  .account-user > span { display: none; }
+  .brand { font-size: 26px; }
+  .brand-mark { width: 34px; height: 34px; }
+  .site-main { padding: 28px 20px 48px; }
+  .site-footer { margin: 0 20px; flex-wrap: wrap; gap: 12px; }
+  .site-footer > :last-child { display: none; }
+}
