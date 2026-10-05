@@ -60,6 +60,13 @@
 .empty-comments { padding: 24px 26px; font-size: 13px; color: var(--muted); }
 .not-found h1 { font-family: Georgia, serif; font-size: 44px; font-weight: 500; }
 .not-found .intro-note { justify-content: center; }
+.vote-controls { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.vote-button { display: flex; align-items: center; gap: 5px; background: transparent; border: 1px solid transparent; color: var(--muted); font-size: 12px; min-height: 36px; padding: 6px 9px; border-radius: 6px; }
+.vote-button:hover { background: var(--canvas); border-color: var(--line); }
+.vote-button.vote-up-active { background: var(--accent-light); border-color: #aec4aa; color: var(--accent); font-weight: 700; }
+.vote-button.vote-down-active { background: #f9e7e8; border-color: #e3a9ac; color: var(--danger); font-weight: 700; }
+.vote-pending { font-size: 11px; color: var(--muted); }
+.vote-error { font-size: 12px; color: var(--danger); max-width: 40ch; }
 @media (max-width: 900px) { .forum-layout { grid-template-columns: minmax(0, 1fr) 220px; gap: 24px; } }
 @media (max-width: 760px) {
   .page-intro { align-items: start; flex-direction: column; gap: 22px; padding-bottom: 28px; }

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadForum, loadThread, createThread, addComment } from './thunks';
+import { applyUserVote, voteKey } from '../votes/model';
 
 const initialState = {
   threads: [], users: [], detail: null, category: '',
@@ -23,9 +24,39 @@ const slice = createSlice({
       state.create.error = null;
       state.comment.error = null;
     },
+    voteStarted(state, action) {
+      const { threadId, commentId } = action.payload;
+      const key = voteKey(threadId, commentId);
+      state.votePending[key] = action.payload;
+      delete state.voteErrors[key];
+    },
+    voteApplied(state, action) {
+      const { threadId, commentId, userId, kind } = action.payload;
+      const update = (target) => {
+        if (!target) return;
+        const result = applyUserVote(target, userId, kind);
+        target.upVotesBy = result.upVotesBy;
+        target.downVotesBy = result.downVotesBy;
+      };
+      if (commentId) {
+        if (state.detail?.id === threadId) update(state.detail.comments.find((comment) => comment.id === commentId));
+      } else {
+        update(state.threads.find((thread) => thread.id === threadId));
+        if (state.detail?.id === threadId) update(state.detail);
+      }
+    },
+    voteFinished(state, action) {
+      delete state.votePending[voteKey(action.payload.threadId, action.payload.commentId)];
+    },
+    voteFailed(state, action) {
+      const key = voteKey(action.payload.threadId, action.payload.commentId);
+      delete state.votePending[key];
+      state.voteErrors[key] = action.payload.error;
+    },
   },
   extraReducers(builder) {
     builder
+      .addCase('auth/loggedOut', (state) => { state.votePending = {}; state.voteErrors = {}; })
       .addCase(loadForum.pending, (state, action) => {
         state.list = { status: 'loading', error: null, requestId: action.meta.requestId };
       })
@@ -84,5 +115,5 @@ const slice = createSlice({
   },
 });
 
-export const { setCategory, clearDetail, clearFormErrors } = slice.actions;
+export const { setCategory, clearDetail, clearFormErrors, voteStarted, voteApplied, voteFinished, voteFailed } = slice.actions;
 export default slice.reducer;
