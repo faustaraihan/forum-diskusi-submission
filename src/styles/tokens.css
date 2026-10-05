@@ -1,0 +1,15 @@
+:root {
+  font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+  color: #17251c;
+  background: #f7f8f4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --surface: #ffffff;
+  --canvas: #f7f8f4;
+  --ink: #17251c;
+  --muted: #526357;
+  --accent: #216342;
+  --accent-light: #e9f1e8;
+  --danger: #a92f39;
+  --line: #dfe6dd;
+}
