@@ -219,53 +219,53 @@ Catatan pencatatan: sumber menulis “Hapus folder node_modules ke dalam berkas 
 
 ## 7. Checklist verifikasi submission
 
-Checklist awal belum diisi karena pekerjaan ini hanya mencatat panduan, bukan mengaudit atau mengimplementasikan aplikasi.
+Checklist diperbarui setelah implementasi. Bukti pemeriksaan dan batas pengujiannya tercatat di [docs/verification.md](docs/verification.md). Operasi mutasi diperiksa melalui tes dengan mock jaringan; operasi tersebut belum dijalankan memakai akun asli pada server publik. Centang berarti implementasi telah diperiksa, bukan hasil penerimaan reviewer Dicoding.
 
 ### 7.1. Fungsionalitas wajib
 
-- [ ] Pengguna dapat mendaftar akun.
-- [ ] Pengguna dapat login.
-- [ ] Daftar thread ditampilkan.
-- [ ] Memilih thread membuka detail beserta komentar.
-- [ ] Pengguna terautentikasi dapat membuat thread.
-- [ ] Pengguna terautentikasi dapat menambahkan komentar.
-- [ ] Interaksi perubahan data mensyaratkan autentikasi.
-- [ ] Loading indicator terlihat selama pemuatan data API.
-- [ ] Item daftar memiliki judul, waktu pembuatan, jumlah komentar, dan nama pembuat.
-- [ ] Detail memiliki judul, body, waktu pembuatan, nama dan avatar pembuat, serta komentar.
-- [ ] Komentar memiliki konten, waktu pembuatan, dan nama pembuat.
+- [x] Pengguna dapat mendaftar akun.
+- [x] Pengguna dapat login.
+- [x] Daftar thread ditampilkan.
+- [x] Memilih thread membuka detail beserta komentar.
+- [x] Pengguna terautentikasi dapat membuat thread.
+- [x] Pengguna terautentikasi dapat menambahkan komentar.
+- [x] Interaksi perubahan data mensyaratkan autentikasi.
+- [x] Loading indicator terlihat selama pemuatan data API.
+- [x] Item daftar memiliki judul, waktu pembuatan, jumlah komentar, dan nama pembuat.
+- [x] Detail memiliki judul, body, waktu pembuatan, nama dan avatar pembuat, serta komentar.
+- [x] Komentar memiliki konten, waktu pembuatan, dan nama pembuat.
 
 ### 7.2. Bugs Highlighting dan arsitektur wajib
 
-- [ ] Konfigurasi ESLint tersedia dan digunakan.
-- [ ] Salah satu dari empat Code Convention yang diizinkan diterapkan.
-- [ ] ESLint tidak melaporkan error.
-- [ ] React Strict Mode digunakan.
-- [ ] Hampir seluruh state aplikasi, khususnya data API, disimpan di Redux Store.
-- [ ] Tidak ada request REST API langsung di lifecycle atau efek komponen.
-- [ ] Folder UI dan state terpisah.
-- [ ] Komponen modular dan reusable.
+- [x] Konfigurasi ESLint tersedia dan digunakan.
+- [x] Salah satu dari empat Code Convention yang diizinkan diterapkan.
+- [x] ESLint tidak melaporkan error.
+- [x] React Strict Mode digunakan.
+- [x] Hampir seluruh state aplikasi, khususnya data API, disimpan di Redux Store.
+- [x] Tidak ada request REST API langsung di lifecycle atau efek komponen.
+- [x] Folder UI dan state terpisah.
+- [x] Komponen modular dan reusable.
 
 ### 7.3. Saran opsional dan kualitas
 
-- [ ] Tombol vote tersedia pada thread dan komentar.
-- [ ] Tombol mengindikasikan vote pengguna saat ini.
-- [ ] Votes menggunakan Optimistically Apply Actions.
-- [ ] Jumlah votes pada thread dan komentar ditampilkan.
-- [ ] Halaman leaderboard tersedia.
-- [ ] Item leaderboard menampilkan nama, avatar, dan score.
-- [ ] Filter kategori tersedia pada daftar threads.
-- [ ] Filter kategori bekerja di frontend dengan state aplikasi.
-- [ ] Aplikasi mudah digunakan dan teks mudah dibaca.
-- [ ] Tampilan aplikasi menarik dan memiliki gaya sendiri.
+- [x] Tombol vote tersedia pada thread dan komentar.
+- [x] Tombol mengindikasikan vote pengguna saat ini.
+- [x] Votes menggunakan Optimistically Apply Actions.
+- [x] Jumlah votes pada thread dan komentar ditampilkan.
+- [x] Halaman leaderboard tersedia.
+- [x] Item leaderboard menampilkan nama, avatar, dan score.
+- [x] Filter kategori tersedia pada daftar threads.
+- [x] Filter kategori bekerja di frontend dengan state aplikasi.
+- [x] Aplikasi mudah digunakan dan teks mudah dibaca.
+- [x] Tampilan aplikasi menarik dan memiliki gaya sendiri.
 
 ### 7.4. Berkas dan pengiriman
 
-- [ ] Folder proyek React disiapkan dalam ZIP.
-- [ ] Aplikasi menggunakan react-dom.
-- [ ] ZIP tidak berisi node_modules.
-- [ ] Aset yang disertakan digunakan oleh proyek.
-- [ ] Source JavaScript yang dikirim tidak di-minify.
-- [ ] Tidak menggunakan framework atau UI library selain React sesuai ketentuan sumber.
-- [ ] Tidak ada plagiasi atau kecurangan.
-- [ ] Seluruh kriteria utama dan ketentuan berkas diperiksa sebelum dikirim.
+- [x] Folder proyek React disiapkan dalam ZIP.
+- [x] Aplikasi menggunakan react-dom.
+- [x] ZIP tidak berisi node_modules.
+- [x] Aset yang disertakan digunakan oleh proyek.
+- [x] Source JavaScript yang dikirim tidak di-minify.
+- [x] Tidak menggunakan framework atau UI library selain React sesuai ketentuan sumber.
+- [x] Tidak ada plagiasi atau kecurangan.
+- [x] Seluruh kriteria utama dan ketentuan berkas diperiksa sebelum dikirim.

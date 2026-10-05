@@ -1,4 +1,5 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../states/auth/thunks';
 import Avatar from './Avatar';
@@ -8,6 +9,11 @@ import ProgressBar from './ProgressBar';
 export default function AppLayout() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.getElementById('main-content')?.focus({ preventScroll: true });
+  }, [pathname]);
   return (
     <>
       <a className="skip-link" href="#main-content">Lewati ke konten</a>
