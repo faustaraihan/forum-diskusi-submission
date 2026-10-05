@@ -8,8 +8,22 @@ const initialState = {
   detailLoad: { status: 'idle', error: null, requestId: null, threadId: null },
   create: { status: 'idle', error: null },
   comment: { status: 'idle', error: null },
-  votePending: {}, voteErrors: {},
+  votePending: {}, voteErrors: {}, voteRevision: 0, voteChanges: {},
 };
+
+/**
+ * Keep the user's newer vote when a GET was started before that change,
+ * or while its POST was pending. Other users' votes still come from the API.
+ */
+function reconcileVotes(state, target, request, threadId = target.id, commentId) {
+  const key = voteKey(threadId, commentId);
+  const change = state.voteChanges[key];
+  if (change && (change.revision > (request.voteRevision || 0)
+    || request.pendingVotes?.includes(key) || state.votePending[key])) {
+    return applyUserVote(target, change.userId, change.kind);
+  }
+  return target;
+}
 
 const slice = createSlice({
   name: 'forum',
@@ -32,6 +46,8 @@ const slice = createSlice({
     },
     voteApplied(state, action) {
       const { threadId, commentId, userId, kind } = action.payload;
+      state.voteRevision += 1;
+      state.voteChanges[voteKey(threadId, commentId)] = { userId, kind, revision: state.voteRevision };
       const update = (target) => {
         if (!target) return;
         const result = applyUserVote(target, userId, kind);
@@ -56,13 +72,26 @@ const slice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase('auth/loggedOut', (state) => { state.votePending = {}; state.voteErrors = {}; })
+      .addCase('auth/loggedOut', (state) => {
+        state.votePending = {};
+        state.voteErrors = {};
+        state.voteChanges = {};
+        state.voteRevision = 0;
+      })
       .addCase(loadForum.pending, (state, action) => {
-        state.list = { status: 'loading', error: null, requestId: action.meta.requestId };
+        state.list = {
+          status: 'loading', error: null, requestId: action.meta.requestId,
+          voteRevision: state.voteRevision, pendingVotes: Object.keys(state.votePending),
+        };
       })
       .addCase(loadForum.fulfilled, (state, action) => {
         if (state.list.requestId !== action.meta.requestId) return;
-        state.threads = action.payload.threads;
+        state.threads = action.payload.threads.map((thread) => reconcileVotes(state, thread, state.list));
+        const cachedThread = state.threads.find((thread) => thread.id === state.detail?.id);
+        if (cachedThread) {
+          state.detail.upVotesBy = cachedThread.upVotesBy;
+          state.detail.downVotesBy = cachedThread.downVotesBy;
+        }
         state.users = action.payload.users;
         state.list = { status: 'succeeded', error: null, requestId: null };
       })
@@ -72,19 +101,26 @@ const slice = createSlice({
         state.list.error = action.payload || 'Daftar diskusi gagal dimuat.';
       })
       .addCase(loadThread.pending, (state, action) => {
-        state.detailLoad = { status: 'loading', error: null, requestId: action.meta.requestId, threadId: action.meta.arg };
+        state.detailLoad = {
+          status: 'loading', error: null, requestId: action.meta.requestId, threadId: action.meta.arg,
+          voteRevision: state.voteRevision, pendingVotes: Object.keys(state.votePending),
+        };
         if (state.detail?.id !== action.meta.arg) state.detail = null;
         state.comment.error = null;
       })
       .addCase(loadThread.fulfilled, (state, action) => {
         if (state.detailLoad.requestId !== action.meta.requestId) return;
-        state.detail = action.payload;
+        const incoming = reconcileVotes(state, action.payload, state.detailLoad);
+        state.detail = {
+          ...incoming,
+          comments: incoming.comments.map((comment) => reconcileVotes(state, comment, state.detailLoad, incoming.id, comment.id)),
+        };
         state.detailLoad.status = 'succeeded';
         state.detailLoad.requestId = null;
         const item = state.threads.find((thread) => thread.id === action.payload.id);
         if (item) {
-          item.upVotesBy = action.payload.upVotesBy;
-          item.downVotesBy = action.payload.downVotesBy;
+          item.upVotesBy = state.detail.upVotesBy;
+          item.downVotesBy = state.detail.downVotesBy;
           item.totalComments = action.payload.comments.length;
         }
       })

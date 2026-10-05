@@ -8,10 +8,12 @@ export default function CommentForm({ threadId }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const user = useSelector((state) => state.auth.user);
+  const sessionReady = useSelector((state) => state.auth.initialized);
   const status = useSelector((state) => state.forum.comment);
   const [content, setContent] = useState('');
   const [validation, setValidation] = useState(null);
   const [sent, setSent] = useState(false);
+  if (!sessionReady) return <div className="comment-login" role="status"><p>Menunggu pemulihan sesi akun.</p><span>Jika koneksi bermasalah, gunakan tombol Coba lagi di atas.</span></div>;
   if (!user) return <div className="comment-login"><p>Punya sudut pandang lain?</p><Link to="/login" state={{ from: location.pathname, reason: 'Masuk untuk ikut menanggapi.' }}>Masuk untuk ikut berdiskusi</Link></div>;
   const submit = async (event) => {
     event.preventDefault();

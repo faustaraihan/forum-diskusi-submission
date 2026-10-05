@@ -1,6 +1,6 @@
 # Rancangan Forum Diskusi — Target Nilai 5
 
-Status: **Rancangan disetujui pengguna pada 5 Oktober 2026. Rencana implementasi masih perlu direview sebelum eksekusi.**
+Status: **Rancangan dan rencana disetujui pengguna pada 5 Oktober 2026; implementasi serta pemeriksaan lokal selesai. Lihat docs/verification.md untuk bukti dan batas pengujian.**
 
 ## Tujuan dan batas pekerjaan
 
@@ -105,4 +105,4 @@ Gunakan HTML semantik, label form, focus indicator, navigasi keyboard, kontras t
 
 ## Tahap berikutnya
 
-Susun dan review rencana implementasi tertulis, lalu bangun fondasi, fitur wajib, fitur opsional, dan lakukan verifikasi. Folder saat ini belum merupakan repository Git; rancangan belum di-commit. Inisialisasi Git dilakukan pada tahap fondasi, tanpa remote atau push otomatis.
+Seluruh fitur sudah diimplementasikan pada branch lokal `feat/ruang-diskusi`. Dokumentasi, test, dan source disimpan di repository Git yang diinisialisasi pada tahap fondasi. Tidak ada remote atau push otomatis. Pengujian mutasi pada server publik menggunakan akun asli serta pengiriman ke Dicoding menjadi langkah pengguna berikutnya; lihat [hasil verifikasi](../../verification.md).

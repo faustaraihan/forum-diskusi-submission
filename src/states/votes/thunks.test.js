@@ -16,6 +16,51 @@ function populatedStore(loggedIn = true) {
 }
 
 describe('optimistic voting', () => {
+  it.each(['read-first', 'write-first'])('preserves a thread vote against an overlapping stale detail read: %s', async (order) => {
+    let resolveVote;
+    vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve) => { resolveVote = resolve; }));
+    const store = populatedStore();
+    const request = store.dispatch(vote({ threadId: 't1', kind: 'up' }));
+    store.dispatch(loadThread.pending('overlap', 't1'));
+    if (order === 'write-first') { resolveVote({ voteType: 1 }); await request; }
+    store.dispatch(loadThread.fulfilled(detail(), 'overlap', 't1'));
+    if (order === 'read-first') { resolveVote({ voteType: 1 }); await request; }
+    expect(store.getState().forum.detail.upVotesBy).toEqual(['me']);
+    expect(store.getState().forum.threads[0].upVotesBy).toEqual(['me']);
+  });
+
+  it('preserves a completed comment vote against a read started while it was pending', async () => {
+    let resolveVote;
+    vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve) => { resolveVote = resolve; }));
+    const store = populatedStore();
+    const request = store.dispatch(vote({ threadId: 't1', commentId: 'c1', kind: 'up' }));
+    store.dispatch(loadThread.pending('overlap', 't1'));
+    resolveVote({ voteType: 1 });
+    await request;
+    store.dispatch(loadThread.fulfilled({ ...detail(), comments: [{ id: 'c1', content: 'Halo', owner: user, upVotesBy: [], downVotesBy: [] }] }, 'overlap', 't1'));
+    expect(store.getState().forum.detail.comments[0].upVotesBy).toEqual(['me']);
+  });
+
+  it('preserves a vote started after a list fetch against that older list response', async () => {
+    vi.spyOn(api, 'vote').mockResolvedValue({ voteType: 1 });
+    const store = populatedStore();
+    store.dispatch(loadForum.pending('overlap'));
+    await store.dispatch(vote({ threadId: 't1', kind: 'up' }));
+    store.dispatch(loadForum.fulfilled({ threads: [thread()], users: [user] }, 'overlap'));
+    expect(store.getState().forum.threads[0].upVotesBy).toEqual(['me']);
+    expect(store.getState().forum.detail.upVotesBy).toEqual(['me']);
+  });
+
+  it('toggles the vote displayed on the refreshed list when cached detail was stale', async () => {
+    const sendVote = vi.spyOn(api, 'vote').mockResolvedValue({ voteType: 0 });
+    const store = populatedStore();
+    store.dispatch(loadForum.pending('fresh'));
+    store.dispatch(loadForum.fulfilled({ threads: [{ ...thread(), upVotesBy: ['me'] }], users: [user] }, 'fresh'));
+    await store.dispatch(vote({ threadId: 't1', kind: 'up' }));
+    expect(sendVote).toHaveBeenLastCalledWith({ threadId: 't1', kind: 'neutral' });
+    expect(store.getState().forum.threads[0].upVotesBy).toEqual([]);
+  });
+
   it('updates both list and detail immediately, then toggles to neutral', async () => {
     const sendVote = vi.spyOn(api, 'vote').mockResolvedValue({ voteType: 1 });
     const store = populatedStore();

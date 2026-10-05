@@ -19,7 +19,7 @@ Tanggal: 5 Oktober 2026 (Asia/Jakarta). Branch lokal: `feat/ruang-diskusi`.
 
 | Pemeriksaan | Hasil |
 | --- | --- |
-| `npm test` | 48 tes lulus pada 9 berkas; exit 0. |
+| `npm test` | 54 tes lulus pada 9 berkas; exit 0. |
 | `npm run lint` | Tidak ada error/warning; exit 0. |
 | `npm run build` | Berhasil; exit 0. |
 | Dependency audit | 0 vulnerabilities saat install dan refresh lockfile. |
@@ -28,6 +28,21 @@ Tanggal: 5 Oktober 2026 (Asia/Jakarta). Branch lokal: `feat/ruang-diskusi`.
 | Guest actions | Vote dan buat diskusi mengarah ke login dengan konteks tujuan. |
 | Validasi register di browser | Password 3 karakter ditolak sebelum request; tidak membuat akun server. |
 | Console dev | Tidak ada log error/warning React pada sesi pemeriksaan. |
+| Preview produksi | URL detail dibuka langsung dan route tidak valid menampilkan fallback; console preview tanpa error/warning. |
 | ZIP | Script berhasil; memeriksa source/config wajib serta absennya node_modules, dist, .git dan .env. |
 
-Review independen dilakukan setelah baseline verifikasi ini; temuan dan hasil regresi dicatat pada pembaruan berikutnya. Checklist submission menunjukkan implementasi yang diperiksa (tes/mock untuk mutasi), bukan bukti semua operasi sudah dijalankan pada server publik.
+Checklist submission menunjukkan implementasi yang diperiksa (tes/mock untuk mutasi), bukan bukti semua operasi sudah dijalankan pada server publik.
+
+## Review independen dan perbaikan
+
+Satu reviewer independen memeriksa seluruh aplikasi setelah baseline 48 tes. Tidak ada temuan Critical atau Minor; tiga temuan Important direproduksi dan diperbaiki dalam satu pass:
+
+1. **GET yang overlap dapat menghapus optimistic vote yang sukses.** Snapshot request sekarang menyimpan revision dan target vote yang pending pada awal pemuatan. Data yang datang direkonsiliasi dengan perubahan pengguna yang lebih baru, termasuk ketika POST selesai sebelum GET. Regresi thread diuji untuk dua urutan penyelesaian, ditambah komentar dan daftar.
+2. **Detail cache dapat berbeda dari daftar saat menghitung toggle.** Pemuatan daftar menyinkronkan membership votes pada detail cache yang cocok. Regresi membuktikan klik up-vote terpilih pada daftar mengirim neutral vote, bukan up-vote ulang.
+3. **Pemulihan sesi yang gagal pada halaman publik tidak menyediakan retry.** Shared layout sekarang memberi pesan dan tombol retry; vote dinonaktifkan dan komentar menunggu pemulihan sesi, bukan menganggap pengguna sebagai guest. Regresi membuktikan retry memulihkan akun tersimpan tanpa login ulang.
+
+Enam tes baru diamati gagal terhadap kode lama, kemudian lulus setelah perbaikan. Seluruh 54 tes, lint, dan build kembali lulus. Tidak ada temuan minor yang ditunda.
+
+Keputusan eksekusi: proyek dibuat langsung dalam folder kosong pengguna, pada branch baru (tanpa linked worktree); ledger dikelola menggunakan PowerShell karena lingkungan Windows. Risiko keputusan tersebut adalah kebutuhan memindahkan checkout atau menelusuri bookkeeping manual bila alur kerja berubah. Tidak ada merge, push, remote, deployment, atau submit otomatis.
+
+Review tidak menilai keberhasilan mutasi pada server publik atau konfigurasi hosting yang belum dibuat. Keputusan: pertahankan batas tersebut secara eksplisit; risiko tersisa adalah perbedaan integrasi akun asli dan kebutuhan SPA fallback di hosting nantinya.
