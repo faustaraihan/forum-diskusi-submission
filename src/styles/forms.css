@@ -1,39 +1,160 @@
-.auth-layout { display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: center; max-width: 1000px; margin: 25px auto; }
-.auth-story { padding: 20px 0; color: var(--accent); }
-.auth-story h1 { font-family: Georgia, serif; font-size: clamp(32px, 3.8vw, 44px); font-weight: 500; line-height: 1.25; letter-spacing: -1.2px; margin: 26px 0 20px; color: var(--ink); }
-.auth-story p { color: var(--muted); line-height: 1.9; font-size: 14px; max-width: 36ch; }
-.auth-story .back-link { margin-top: 18px; text-decoration: underline; text-underline-offset: 4px; }
-.form-panel { background: var(--surface); border: 1px solid var(--line); padding: 34px; border-radius: 12px; }
-.form-panel h2, .form-panel h1 { margin: 0 0 10px; font-size: 24px; font-weight: 650; letter-spacing: -.6px; }
-.form-panel > p { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 0 0 26px; }
-.form-field { display: flex; flex-direction: column; gap: 9px; margin-bottom: 21px; }
-.form-field label { color: var(--ink); font-weight: 600; font-size: 13px; }
-.form-field input, .form-field textarea { border: 1px solid #bdcbbd; border-radius: 7px; padding: 12px 14px; width: 100%; background: #fff; color: var(--ink); font-size: 14px; min-height: 46px; }
-.form-field textarea { resize: vertical; line-height: 1.7; }
-.form-field input::placeholder, .form-field textarea::placeholder { color: #68776a; }
-.field-help { color: var(--muted); font-size: 12px; line-height: 1.6; }
-.form-error { font-size: 13px; color: var(--danger); background: #fff1f1; border: 1px solid #eed4d6; padding: 12px 14px; border-radius: 6px; line-height: 1.6; }
-.success-message { color: var(--accent) !important; background: var(--accent-light); font-size: 13px; padding: 12px; border-radius: 6px; }
-.form-panel > .form-note { color: var(--accent); margin-bottom: 22px; }
-.full-width { width: 100%; }
-.form-panel > .form-switch { margin: 24px 0 0; text-align: center; }
-.form-switch a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
-.editor-layout { max-width: 760px; margin: auto; }
-.editor-panel { padding: 36px; }
-.form-actions { display: flex; justify-content: end; align-items: center; gap: 24px; }
-.cancel-link { font-size: 13px; color: var(--muted); text-decoration: none; }
-.comment-form { padding: 24px 26px; border-bottom: 1px solid var(--line); }
-.comment-form > .button { display: flex; margin-left: auto; }
-.comment-login { padding: 22px 26px; border-bottom: 1px solid var(--line); background: #f6f8f3; }
-.comment-login p { font-size: 14px; font-weight: 600; margin: 0 0 8px; }
-.comment-login a { color: var(--accent); font-size: 13px; text-underline-offset: 4px; }
-@media (max-width: 900px) { .auth-layout { gap: 30px; grid-template-columns: 1fr 390px; } }
+.auth-layout {
+  max-width: 660px;
+  padding: 70px 30px;
+  min-height: 100vh;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+.form-panel {
+  max-width: 420px;
+  margin: auto;
+}
+.form-panel h1 {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.015em;
+  margin: 0 0 10px;
+}
+.form-panel > p {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin: 0 0 30px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 22px;
+}
+.form-field label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid #3b3b3b;
+  border-radius: 10px;
+  background: #161616;
+  color: var(--ink);
+  font-size: var(--text-base);
+  min-height: 48px;
+  padding: 11px 14px;
+}
+.form-field input:hover,
+.form-field textarea:hover {
+  border-color: #666;
+}
+.form-field textarea {
+  resize: vertical;
+  line-height: 1.65;
+}
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: var(--muted);
+}
+.field-help {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.6;
+}
+.form-error {
+  color: var(--danger);
+  border: 1px solid #69414a;
+  background: #301c20;
+  font-size: var(--text-xs);
+  padding: 12px 14px;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+.success-message {
+  color: var(--ink);
+  background: var(--accent-light);
+  font-size: var(--text-xs);
+  padding: 12px;
+  border-radius: 8px;
+}
+.form-panel > .success-message {
+  color: var(--ink);
+}
+.form-panel > .form-note {
+  color: #ccc;
+  margin-bottom: 22px;
+}
+.full-width {
+  width: 100%;
+}
+.form-panel > .form-switch {
+  text-align: center;
+  margin: 26px 0 0;
+  font-size: var(--text-xs);
+}
+.form-switch a {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+  text-underline-offset: 3px;
+}
+.editor-layout {
+  max-width: 660px;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  min-height: 100vh;
+}
+.editor-panel {
+  max-width: none;
+  padding: 28px 24px;
+}
+.editor-panel h1 {
+  font-size: var(--text-2xl);
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 24px;
+}
+.cancel-link {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-decoration: none;
+}
+.comment-form {
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.comment-form > .button {
+  display: flex;
+  margin-left: auto;
+}
+.comment-login {
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.comment-login p {
+  font-size: var(--text-sm);
+  margin: 0 0 8px;
+}
+.comment-login a {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  text-underline-offset: 4px;
+}
 @media (max-width: 760px) {
-  .auth-layout { display: block; margin: 0; }
-  .auth-story { padding: 0 0 20px; }
-  .auth-story > svg, .auth-story > .back-link { display: none; }
-  .auth-story h1 { font-size: 30px; margin-top: 0; }
-  .auth-story p { max-width: none; }
-  .form-panel, .editor-panel { padding: 26px 20px; }
-  .comment-form, .comment-login { padding: 22px 20px; }
+  .auth-layout {
+    max-width: none;
+    min-height: auto;
+    padding: 42px 24px;
+    border: 0;
+  }
+  .editor-layout {
+    border: 0;
+    min-height: auto;
+    max-width: none;
+  }
+  .editor-panel,
+  .comment-form,
+  .comment-login {
+    padding: 22px 18px;
+  }
 }

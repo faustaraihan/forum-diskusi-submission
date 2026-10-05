@@ -3,7 +3,11 @@ import { selectVisibleThreads, selectCategories } from './selectors';
 import { thread, user } from '../../test/fixtures';
 
 describe('forum selectors', () => {
-  const forum = { threads: [thread('a', 'react'), thread('b', 'redux'), thread('c', 'react')], users: [user], category: '' };
+  const forum = {
+    threads: [thread('a', 'react'), thread('b', 'redux'), thread('c', 'react')],
+    users: [user],
+    category: '',
+  };
 
   it('shows every thread with author information when no filter is selected', () => {
     const result = selectVisibleThreads({ forum });
@@ -12,7 +16,9 @@ describe('forum selectors', () => {
   });
 
   it('filters locally without mutating the original list', () => {
-    expect(selectVisibleThreads({ forum: { ...forum, category: 'redux' } }).map((item) => item.id)).toEqual(['b']);
+    expect(
+      selectVisibleThreads({ forum: { ...forum, category: 'redux' } }).map((item) => item.id)
+    ).toEqual(['b']);
     expect(forum.threads).toHaveLength(3);
   });
 

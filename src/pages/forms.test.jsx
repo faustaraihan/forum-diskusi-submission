@@ -17,7 +17,16 @@ function LocationCapture() {
 
 function mount(element, authenticated = false) {
   const store = createAppStore(authenticated ? { auth: authenticatedState() } : undefined);
-  render(<Provider store={store}><MemoryRouter><Routes><Route path="/" element={element} /><Route path="*" element={<LocationCapture />} /></Routes></MemoryRouter></Provider>);
+  render(
+    <Provider store={store}>
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={element} />
+          <Route path="*" element={<LocationCapture />} />
+        </Routes>
+      </MemoryRouter>
+    </Provider>
+  );
   return store;
 }
 
@@ -55,7 +64,12 @@ it('does not allow whitespace-only thread content', () => {
 
 it('opens the server-created thread and prevents a duplicate pending submit', async () => {
   let resolveThread;
-  const request = vi.spyOn(api, 'createThread').mockImplementation(() => new Promise((resolve) => { resolveThread = resolve; }));
+  const request = vi.spyOn(api, 'createThread').mockImplementation(
+    () =>
+      new Promise((resolve) => {
+        resolveThread = resolve;
+      })
+  );
   mount(<NewThreadPage />, true);
   fireEvent.change(screen.getByLabelText('Judul'), { target: { value: 'Judul' } });
   fireEvent.change(screen.getByLabelText('Isi diskusi'), { target: { value: 'Konten' } });
@@ -79,7 +93,15 @@ it('keeps thread contents after a failed submission', async () => {
 });
 
 it('keeps a failed comment and clears it only after a successful retry', async () => {
-  vi.spyOn(api, 'createComment').mockRejectedValueOnce(new Error('Offline')).mockResolvedValueOnce({ id: 'c1', content: 'Komentar', owner: { id: 'me', name: 'Ayu' }, upVotesBy: [], downVotesBy: [] });
+  vi.spyOn(api, 'createComment')
+    .mockRejectedValueOnce(new Error('Offline'))
+    .mockResolvedValueOnce({
+      id: 'c1',
+      content: 'Komentar',
+      owner: { id: 'me', name: 'Ayu' },
+      upVotesBy: [],
+      downVotesBy: [],
+    });
   mount(<CommentForm threadId="t1" />, true);
   fireEvent.change(screen.getByLabelText('Tanggapanmu'), { target: { value: 'Komentar' } });
   fireEvent.click(screen.getByRole('button', { name: 'Kirim komentar' }));

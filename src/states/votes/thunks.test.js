@@ -11,33 +11,70 @@ function populatedStore(loggedIn = true) {
   const store = createAppStore(loggedIn ? { auth: authenticatedState() } : undefined);
   store.dispatch(loadForum.fulfilled({ threads: [thread()], users: [user] }, null));
   store.dispatch(loadThread.pending('r', 't1'));
-  store.dispatch(loadThread.fulfilled({ ...detail(), comments: [{ id: 'c1', content: 'Halo', owner: user, upVotesBy: [], downVotesBy: [] }] }, 'r', 't1'));
+  store.dispatch(
+    loadThread.fulfilled(
+      {
+        ...detail(),
+        comments: [{ id: 'c1', content: 'Halo', owner: user, upVotesBy: [], downVotesBy: [] }],
+      },
+      'r',
+      't1'
+    )
+  );
   return store;
 }
 
 describe('optimistic voting', () => {
-  it.each(['read-first', 'write-first'])('preserves a thread vote against an overlapping stale detail read: %s', async (order) => {
-    let resolveVote;
-    vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve) => { resolveVote = resolve; }));
-    const store = populatedStore();
-    const request = store.dispatch(vote({ threadId: 't1', kind: 'up' }));
-    store.dispatch(loadThread.pending('overlap', 't1'));
-    if (order === 'write-first') { resolveVote({ voteType: 1 }); await request; }
-    store.dispatch(loadThread.fulfilled(detail(), 'overlap', 't1'));
-    if (order === 'read-first') { resolveVote({ voteType: 1 }); await request; }
-    expect(store.getState().forum.detail.upVotesBy).toEqual(['me']);
-    expect(store.getState().forum.threads[0].upVotesBy).toEqual(['me']);
-  });
+  it.each(['read-first', 'write-first'])(
+    'preserves a thread vote against an overlapping stale detail read: %s',
+    async (order) => {
+      let resolveVote;
+      vi.spyOn(api, 'vote').mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolveVote = resolve;
+          })
+      );
+      const store = populatedStore();
+      const request = store.dispatch(vote({ threadId: 't1', kind: 'up' }));
+      store.dispatch(loadThread.pending('overlap', 't1'));
+      if (order === 'write-first') {
+        resolveVote({ voteType: 1 });
+        await request;
+      }
+      store.dispatch(loadThread.fulfilled(detail(), 'overlap', 't1'));
+      if (order === 'read-first') {
+        resolveVote({ voteType: 1 });
+        await request;
+      }
+      expect(store.getState().forum.detail.upVotesBy).toEqual(['me']);
+      expect(store.getState().forum.threads[0].upVotesBy).toEqual(['me']);
+    }
+  );
 
   it('preserves a completed comment vote against a read started while it was pending', async () => {
     let resolveVote;
-    vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve) => { resolveVote = resolve; }));
+    vi.spyOn(api, 'vote').mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveVote = resolve;
+        })
+    );
     const store = populatedStore();
     const request = store.dispatch(vote({ threadId: 't1', commentId: 'c1', kind: 'up' }));
     store.dispatch(loadThread.pending('overlap', 't1'));
     resolveVote({ voteType: 1 });
     await request;
-    store.dispatch(loadThread.fulfilled({ ...detail(), comments: [{ id: 'c1', content: 'Halo', owner: user, upVotesBy: [], downVotesBy: [] }] }, 'overlap', 't1'));
+    store.dispatch(
+      loadThread.fulfilled(
+        {
+          ...detail(),
+          comments: [{ id: 'c1', content: 'Halo', owner: user, upVotesBy: [], downVotesBy: [] }],
+        },
+        'overlap',
+        't1'
+      )
+    );
     expect(store.getState().forum.detail.comments[0].upVotesBy).toEqual(['me']);
   });
 
@@ -55,7 +92,9 @@ describe('optimistic voting', () => {
     const sendVote = vi.spyOn(api, 'vote').mockResolvedValue({ voteType: 0 });
     const store = populatedStore();
     store.dispatch(loadForum.pending('fresh'));
-    store.dispatch(loadForum.fulfilled({ threads: [{ ...thread(), upVotesBy: ['me'] }], users: [user] }, 'fresh'));
+    store.dispatch(
+      loadForum.fulfilled({ threads: [{ ...thread(), upVotesBy: ['me'] }], users: [user] }, 'fresh')
+    );
     await store.dispatch(vote({ threadId: 't1', kind: 'up' }));
     expect(sendVote).toHaveBeenLastCalledWith({ threadId: 't1', kind: 'neutral' });
     expect(store.getState().forum.threads[0].upVotesBy).toEqual([]);
@@ -84,7 +123,12 @@ describe('optimistic voting', () => {
 
   it('rolls back only the acting user while preserving a concurrent change', async () => {
     let rejectVote;
-    vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve, reject) => { rejectVote = reject; }));
+    vi.spyOn(api, 'vote').mockImplementation(
+      () =>
+        new Promise((resolve, reject) => {
+          rejectVote = reject;
+        })
+    );
     const store = populatedStore();
     const request = store.dispatch(vote({ threadId: 't1', kind: 'up' }));
     store.dispatch(voteApplied({ threadId: 't1', userId: 'other', kind: 'up' }));
@@ -113,7 +157,12 @@ describe('optimistic voting', () => {
 
   it('deduplicates a pending target but leaves other targets usable', async () => {
     let resolveVote;
-    const sendVote = vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve) => { resolveVote = resolve; }));
+    const sendVote = vi.spyOn(api, 'vote').mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveVote = resolve;
+        })
+    );
     const store = populatedStore();
     const request = store.dispatch(vote({ threadId: 't1', kind: 'up' }));
     await store.dispatch(vote({ threadId: 't1', kind: 'down' }));
@@ -125,7 +174,12 @@ describe('optimistic voting', () => {
 
   it('does not roll back a new session when an old request fails after logout', async () => {
     let rejectVote;
-    vi.spyOn(api, 'vote').mockImplementation(() => new Promise((resolve, reject) => { rejectVote = reject; }));
+    vi.spyOn(api, 'vote').mockImplementation(
+      () =>
+        new Promise((resolve, reject) => {
+          rejectVote = reject;
+        })
+    );
     const store = populatedStore();
     const request = store.dispatch(vote({ threadId: 't1', kind: 'up' }));
     store.dispatch(logout());

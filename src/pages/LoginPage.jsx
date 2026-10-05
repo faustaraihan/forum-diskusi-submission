@@ -5,7 +5,6 @@ import { login } from '../states/auth/thunks';
 import { clearAuthError } from '../states/auth/slice';
 import { getSafeReturnPath } from '../utils/redirect';
 import FormField from '../components/FormField';
-import Icon from '../components/Icon';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -16,17 +15,72 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [validation, setValidation] = useState(null);
   const destination = getSafeReturnPath(location.state?.from);
-  useEffect(() => { dispatch(clearAuthError()); }, [dispatch]);
+  useEffect(() => {
+    dispatch(clearAuthError());
+  }, [dispatch]);
   if (auth.user) return <Navigate to={destination} replace />;
   const submit = async (event) => {
     event.preventDefault();
     if (auth.status === 'loading') return;
-    if (!email.trim() || !password) { setValidation('Isi email dan password terlebih dahulu.'); return; }
+    if (!email.trim() || !password) {
+      setValidation('Isi email dan password terlebih dahulu.');
+      return;
+    }
     setValidation(null);
     try {
       await dispatch(login({ email: email.trim(), password })).unwrap();
       navigate(destination, { replace: true });
-    } catch { /* Error disajikan melalui Redux agar input tetap tersedia. */ }
+    } catch {
+      /* Error disajikan melalui Redux agar input tetap tersedia. */
+    }
   };
-  return <div className="auth-layout"><section className="auth-story"><Icon name="chat" size={36} /><h1>Sudut pandang baru<br />dimulai dari obrolan.</h1><p>Masuk untuk bertanya, menanggapi, dan memberikan suara pada ide yang menarik.</p><Link className="back-link" to="/">Jelajahi diskusi dulu</Link></section><section className="form-panel"><h2>Selamat datang kembali.</h2><p>Masuk dan lanjutkan percakapanmu.</p>{location.state?.registered && <p className="success-message" role="status">Akun berhasil dibuat. Silakan masuk.</p>}{location.state?.reason && <p className="form-note">{location.state.reason}</p>}<form onSubmit={submit} noValidate><FormField id="login-email" label="Email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required placeholder="nama@email.com" /><FormField id="login-password" label="Password" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />{(validation || auth.error) && <p className="form-error" role="alert">{validation || auth.error}</p>}<button className="button full-width" type="submit" disabled={auth.status === 'loading'}>{auth.status === 'loading' ? 'Sedang masuk…' : 'Masuk ke ruang'}</button></form><p className="form-switch">Belum punya akun? <Link to="/register" state={{ from: destination }}>Buat akun</Link></p></section></div>;
+  return (
+    <div className="auth-layout">
+      <section className="form-panel">
+        <h1>Masuk ke ruang</h1>
+        <p>Lanjutkan percakapan dengan akunmu.</p>
+        {location.state?.registered && (
+          <p className="success-message" role="status">
+            Akun berhasil dibuat. Silakan masuk.
+          </p>
+        )}
+        {location.state?.reason && <p className="form-note">{location.state.reason}</p>}
+        <form onSubmit={submit} noValidate>
+          <FormField
+            id="login-email"
+            label="Email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+            placeholder="nama@email.com"
+          />
+          <FormField
+            id="login-password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+          {(validation || auth.error) && (
+            <p className="form-error" role="alert">
+              {validation || auth.error}
+            </p>
+          )}
+          <button className="button full-width" type="submit" disabled={auth.status === 'loading'}>
+            {auth.status === 'loading' ? 'Sedang masuk…' : 'Masuk ke ruang'}
+          </button>
+        </form>
+        <p className="form-switch">
+          Belum punya akun?{' '}
+          <Link to="/register" state={{ from: destination }}>
+            Buat akun
+          </Link>
+        </p>
+      </section>
+    </div>
+  );
 }

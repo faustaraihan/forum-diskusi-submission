@@ -8,8 +8,11 @@ export function vote({ threadId, commentId, kind }) {
     const key = voteKey(threadId, commentId);
     if (!auth.user || forum.votePending[key]) return;
     const target = commentId
-      ? forum.detail?.id === threadId && forum.detail.comments.find((comment) => comment.id === commentId)
-      : forum.detail?.id === threadId ? forum.detail : forum.threads.find((thread) => thread.id === threadId);
+      ? forum.detail?.id === threadId &&
+        forum.detail.comments.find((comment) => comment.id === commentId)
+      : forum.detail?.id === threadId
+        ? forum.detail
+        : forum.threads.find((thread) => thread.id === threadId);
     if (!target) return;
     const previous = getUserVote(target, auth.user.id);
     const next = previous === kind ? 'neutral' : kind;

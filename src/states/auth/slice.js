@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { bootstrapAuth, login, register } from './thunks';
 
-const initialState = { user: null, initialized: false, status: 'idle', error: null, requestId: null, session: 0 };
+const initialState = {
+  user: null,
+  initialized: false,
+  status: 'idle',
+  error: null,
+  requestId: null,
+  session: 0,
+};
 
 const slice = createSlice({
   name: 'auth',
@@ -15,7 +22,9 @@ const slice = createSlice({
       state.requestId = null;
       state.session += 1;
     },
-    clearAuthError(state) { state.error = null; },
+    clearAuthError(state) {
+      state.error = null;
+    },
   },
   extraReducers(builder) {
     [bootstrapAuth, login, register].forEach((thunk) => {

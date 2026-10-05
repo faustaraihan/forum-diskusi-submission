@@ -8,27 +8,67 @@ import CategoryFilter from '../components/CategoryFilter';
 import ThreadCard from '../components/ThreadCard';
 import AsyncState from '../components/AsyncState';
 import Icon from '../components/Icon';
+import Avatar from '../components/Avatar';
 
 export default function ThreadsPage() {
   const dispatch = useDispatch();
   const threads = useSelector(selectVisibleThreads);
   const categories = useSelector(selectCategories);
   const { category, list } = useSelector((state) => state.forum);
-  useEffect(() => { dispatch(loadForum()); }, [dispatch]);
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    dispatch(loadForum());
+  }, [dispatch]);
   return (
     <>
-      <div className="page-intro"><div><p className="intro-note"><span className="status-dot" />Tempat ide bertemu</p><h1>Obrolan hari ini,<br />wawasan untuk nanti.</h1><p>Tanyakan yang belum kamu tahu. Bagikan yang sudah kamu temukan.</p></div><Link className="button" to="/threads/new"><Icon name="plus" />Buat diskusi</Link></div>
       <div className="forum-layout">
         <section className="discussion-feed" aria-label="Daftar diskusi">
-          <div className="section-heading"><h2>{category ? `Topik #${category}` : 'Semua diskusi'}</h2><span>{threads.length} percakapan</span></div>
-          <AsyncState {...list} onRetry={() => dispatch(loadForum())} isEmpty={threads.length === 0} emptyTitle={category ? 'Belum ada diskusi di topik ini' : 'Belum ada diskusi'} emptyDescription="Pilih topik lain atau mulai percakapan baru.">
-            <div className="thread-list">{threads.map((thread) => <ThreadCard key={thread.id} thread={thread} />)}</div>
+          <div className="feed-heading">
+            <h1>Diskusi</h1>
+            <span>{threads.length} percakapan</span>
+          </div>
+          <div className="feed-composer">
+            <Avatar name={user?.name || 'Ruang'} src={user?.avatar} large />
+            <Link className="composer-prompt" to="/threads/new">
+              Apa yang ingin kamu diskusikan?
+            </Link>
+            <Link className="button button-secondary" to="/threads/new">
+              <Icon name="plus" size={16} />
+              <span>Buat</span>
+            </Link>
+          </div>
+          <div className="feed-topics">
+            <CategoryFilter
+              categories={categories}
+              value={category}
+              onChange={(value) => dispatch(setCategory(value))}
+            />
+          </div>
+          <AsyncState
+            {...list}
+            onRetry={() => dispatch(loadForum())}
+            isEmpty={threads.length === 0}
+            emptyTitle={category ? 'Belum ada diskusi di topik ini' : 'Belum ada diskusi'}
+            emptyDescription="Pilih topik lain atau mulai percakapan baru."
+          >
+            <div className="thread-list">
+              {threads.map((thread) => (
+                <ThreadCard key={thread.id} thread={thread} />
+              ))}
+            </div>
           </AsyncState>
         </section>
         <aside className="forum-sidebar">
-          <section className="sidebar-section"><h2>Jelajahi topik</h2><p>Temukan percakapan yang dekat dengan minatmu.</p><CategoryFilter categories={categories} value={category} onChange={(value) => dispatch(setCategory(value))} /></section>
-          <section className="community-note"><Icon name="book" size={30} /><h2>Selalu ada yang<br />bisa kita pelajari.</h2><p>Satu pertanyaanmu mungkin juga jadi pertanyaan orang lain. Mulai saja.</p><Link to="/threads/new">Bagikan pertanyaan</Link></section>
-          <Link className="leaderboard-link" to="/leaderboards"><Icon name="trophy" /><span>Lihat kontributor teratas</span></Link>
+          <section className="sidebar-section">
+            <h2>Tentang ruang</h2>
+            <p>Forum terbuka untuk bertanya, berbagi pengalaman, dan saling menanggapi.</p>
+            <Link className="leaderboard-link" to="/leaderboards">
+              <Icon name="trophy" size={18} />
+              <span>Peringkat kontributor</span>
+              <span aria-hidden="true">↗</span>
+            </Link>
+          </section>
+          <p className="sidebar-caption">ruang · Forum diskusi</p>
         </aside>
       </div>
     </>

@@ -25,7 +25,12 @@ describe('forum state consistency', () => {
 
   it('loads users and threads together and deduplicates pending requests', async () => {
     let resolveThreads;
-    const fetchThreads = vi.spyOn(api, 'getThreads').mockImplementation(() => new Promise((resolve) => { resolveThreads = resolve; }));
+    const fetchThreads = vi.spyOn(api, 'getThreads').mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveThreads = resolve;
+        })
+    );
     vi.spyOn(api, 'getUsers').mockResolvedValue([user]);
     const store = createAppStore();
     const first = store.dispatch(loadForum());
@@ -45,8 +50,38 @@ describe('forum state consistency', () => {
     expect(store.getState().forum.users[0].name).toBe('Ayu');
   });
 
+  it('keeps a newly created thread when an earlier list request finishes', async () => {
+    let resolveThreads;
+    vi.spyOn(api, 'getThreads').mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveThreads = resolve;
+        })
+    );
+    vi.spyOn(api, 'getUsers').mockResolvedValue([]);
+    vi.spyOn(api, 'createThread').mockResolvedValue(thread('new-thread'));
+    const store = createAppStore({ auth: authenticatedState() });
+    const oldList = store.dispatch(loadForum());
+    await store.dispatch(createThread({ title: 'Judul', body: 'Isi' }));
+    resolveThreads([]);
+    await oldList;
+    expect(store.getState().forum.threads.map((item) => item.id)).toEqual(['new-thread']);
+    expect(store.getState().forum.users).toEqual([user]);
+    expect(store.getState().forum.list.status).toBe('succeeded');
+    api.getThreads.mockResolvedValue([thread('new-thread'), thread('other-thread')]);
+    await store.dispatch(loadForum());
+    expect(store.getState().forum.threads).toHaveLength(2);
+  });
+
   it('adds a comment and updates its thread count with the author avatar fallback', async () => {
-    vi.spyOn(api, 'createComment').mockResolvedValue({ id: 'c1', content: 'Halo', createdAt: '2026-10-05', owner: { id: 'me', name: 'Ayu' }, upVotesBy: [], downVotesBy: [] });
+    vi.spyOn(api, 'createComment').mockResolvedValue({
+      id: 'c1',
+      content: 'Halo',
+      createdAt: '2026-10-05',
+      owner: { id: 'me', name: 'Ayu' },
+      upVotesBy: [],
+      downVotesBy: [],
+    });
     const store = createAppStore({ auth: authenticatedState() });
     store.dispatch(loadForum.fulfilled({ threads: [thread()], users: [user] }, null));
     store.dispatch(loadThread.pending('request', 't1'));
@@ -58,7 +93,12 @@ describe('forum state consistency', () => {
 
   it('does not insert a comment into a different active thread', async () => {
     let resolveComment;
-    vi.spyOn(api, 'createComment').mockImplementation(() => new Promise((resolve) => { resolveComment = resolve; }));
+    vi.spyOn(api, 'createComment').mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveComment = resolve;
+        })
+    );
     const store = createAppStore({ auth: authenticatedState() });
     const request = store.dispatch(addComment({ threadId: 't1', content: 'Halo' }));
     store.dispatch(loadThread.pending('b', 't2'));

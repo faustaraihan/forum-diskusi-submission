@@ -7,7 +7,15 @@ describe('safe login return paths', () => {
     expect(getSafeReturnPath('/threads/new')).toBe('/threads/new');
   });
 
-  it.each(['https://example.com', '//example.com', '/\\example.com', '/login', '/register?x=1', '/%2f%2fexample.com', undefined])('rejects an unsafe or looping return path %s', (path) => {
+  it.each([
+    'https://example.com',
+    '//example.com',
+    '/\\example.com',
+    '/login',
+    '/register?x=1',
+    '/%2f%2fexample.com',
+    undefined,
+  ])('rejects an unsafe or looping return path %s', (path) => {
     expect(getSafeReturnPath(path)).toBe('/');
   });
 });

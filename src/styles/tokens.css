@@ -1,15 +1,37 @@
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
 :root {
-  font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
-  color: #17251c;
-  background: #f7f8f4;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #f3f3f3;
+  background: #101010;
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --surface: #ffffff;
-  --canvas: #f7f8f4;
-  --ink: #17251c;
-  --muted: #526357;
-  --accent: #216342;
-  --accent-light: #e9f1e8;
-  --danger: #a92f39;
-  --line: #dfe6dd;
+  --text-xs: 0.875rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.5rem;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --control-height: 44px;
+  --avatar-size: 40px;
+  --avatar-large-size: 44px;
+  --canvas: #101010;
+  --ink: #f3f3f3;
+  --muted: #999999;
+  --accent: #f3f3f3;
+  --accent-light: #232323;
+  --danger: #ff929b;
+  --line: #2b2b2b;
+  --hover: #191919;
 }

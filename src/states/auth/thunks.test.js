@@ -9,7 +9,11 @@ describe('authentication lifecycle', () => {
     const profile = vi.spyOn(api, 'getMe');
     const store = createAppStore();
     await store.dispatch(bootstrapAuth());
-    expect(store.getState().auth).toMatchObject({ initialized: true, user: null, status: 'succeeded' });
+    expect(store.getState().auth).toMatchObject({
+      initialized: true,
+      user: null,
+      status: 'succeeded',
+    });
     expect(profile).not.toHaveBeenCalled();
   });
 
@@ -42,7 +46,12 @@ describe('authentication lifecycle', () => {
   it('deduplicates bootstrap while the profile request is pending', async () => {
     setToken('saved');
     let resolveProfile;
-    const profile = vi.spyOn(api, 'getMe').mockImplementation(() => new Promise((resolve) => { resolveProfile = resolve; }));
+    const profile = vi.spyOn(api, 'getMe').mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveProfile = resolve;
+        })
+    );
     const store = createAppStore();
     const first = store.dispatch(bootstrapAuth());
     await store.dispatch(bootstrapAuth());
@@ -79,4 +88,33 @@ describe('authentication lifecycle', () => {
     expect(store.getState().auth.user).toBeNull();
     expect(getToken()).toBeNull();
   });
+
+  it.each(['bootstrap', 'login'])(
+    'ignores an expired %s response after another login',
+    async (operation) => {
+      let rejectOldProfile;
+      vi.spyOn(api, 'getMe')
+        .mockImplementationOnce(
+          () =>
+            new Promise((resolve, reject) => {
+              rejectOldProfile = reject;
+            })
+        )
+        .mockResolvedValue({ id: 'new-user', name: 'Bima' });
+      vi.spyOn(api, 'login')
+        .mockResolvedValueOnce(operation === 'login' ? 'old-token' : 'new-token')
+        .mockResolvedValue('new-token');
+      const store = createAppStore();
+      setToken('old-token');
+      const oldRequest = store.dispatch(operation === 'bootstrap' ? bootstrapAuth() : login({}));
+      await vi.waitFor(() => expect(rejectOldProfile).toBeTypeOf('function'));
+      store.dispatch(logout());
+      await store.dispatch(login({}));
+      expect(getToken()).toBe('new-token');
+      rejectOldProfile(new ApiError('Expired', 401));
+      await oldRequest;
+      expect(getToken()).toBe('new-token');
+      expect(store.getState().auth.user.id).toBe('new-user');
+    }
+  );
 });

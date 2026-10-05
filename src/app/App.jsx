@@ -17,6 +17,29 @@ import '../styles/forms.css';
 
 export default function App() {
   const dispatch = useDispatch();
-  useEffect(() => { dispatch(bootstrapAuth()); }, [dispatch]);
-  return <BrowserRouter><Routes><Route element={<AppLayout />}><Route path="/" element={<ThreadsPage />} /><Route path="/threads/new" element={<RequireAuth><NewThreadPage /></RequireAuth>} /><Route path="/threads/:threadId" element={<ThreadDetailPage />} /><Route path="/leaderboards" element={<LeaderboardsPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route path="*" element={<NotFoundPage />} /></Route></Routes></BrowserRouter>;
+  useEffect(() => {
+    dispatch(bootstrapAuth());
+  }, [dispatch]);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<ThreadsPage />} />
+          <Route
+            path="/threads/new"
+            element={
+              <RequireAuth>
+                <NewThreadPage />
+              </RequireAuth>
+            }
+          />
+          <Route path="/threads/:threadId" element={<ThreadDetailPage />} />
+          <Route path="/leaderboards" element={<LeaderboardsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
