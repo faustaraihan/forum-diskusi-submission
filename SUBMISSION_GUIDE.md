@@ -207,42 +207,42 @@ Saat pencatatan, working tree juga sudah memiliki penghapusan `.gitignore` dan s
 
 ## 6. Checklist pengerjaan dan bukti
 
-Checklist belum dicentang karena pemenuhan akhir belum diverifikasi. Adanya berkas kode/test bukan bukti bahwa semua kriteria lulus.
+Checklist diperbarui setelah pengujian lokal, CI GitHub, proteksi branch, deployment produksi, dan audit ZIP pada 6 Oktober 2026. Rincian bukti ada di `SUBMISSION_NOTES.md`; penilaian akhir tetap dilakukan reviewer Dicoding.
 
 ### Wajib
 
-- [ ] Minimal dua pengujian reducer yang benar-benar menguji reducer.
-- [ ] Minimal dua pengujian thunk function.
-- [ ] Minimal dua pengujian React components.
-- [ ] Minimal satu pengujian E2E alur login.
-- [ ] Skenario tertulis pada setiap berkas pengujian.
-- [ ] `npm test` dapat dijalankan dan lulus.
-- [ ] `npm run e2e` dapat dijalankan dan lulus.
-- [ ] CI melalui GitHub Actions telah dijalankan.
-- [ ] CD melalui Vercel telah diterapkan.
-- [ ] Branch `master` diproteksi.
-- [ ] Screenshot `1_ci_check_error` berasal dari kegagalan pengujian CI proyek sendiri.
-- [ ] Screenshot `2_ci_check_pass` berasal dari kelulusan pengujian CI proyek sendiri.
-- [ ] Screenshot `3_branch_protection` menunjukkan proteksi pada halaman PR.
-- [ ] Ketiga screenshot masuk ke ZIP proyek.
-- [ ] URL aplikasi Vercel dicantumkan pada catatan submission.
-- [ ] Minimal satu ecosystem yang memenuhi daftar Dicoding digunakan secara nyata.
-- [ ] Fungsionalitas, Bugs Highlighting, dan Arsitektur submission sebelumnya dipertahankan setelah rincian lama diaudit.
-- [ ] ZIP memuat source proyek React DOM, tanpa `node_modules` dan tanpa source yang di-minify.
-- [ ] Aset yang disertakan digunakan oleh proyek.
+- [x] Minimal dua pengujian reducer yang benar-benar menguji reducer.
+- [x] Minimal dua pengujian thunk function.
+- [x] Minimal dua pengujian React components.
+- [x] Minimal satu pengujian E2E alur login.
+- [x] Skenario tertulis pada setiap berkas pengujian.
+- [x] `npm test` dapat dijalankan dan lulus.
+- [x] `npm run e2e` dapat dijalankan dan lulus.
+- [x] CI melalui GitHub Actions telah dijalankan.
+- [x] CD melalui Vercel telah diterapkan.
+- [x] Branch `master` diproteksi.
+- [x] Screenshot `1_ci_check_error` berasal dari kegagalan pengujian CI proyek sendiri.
+- [x] Screenshot `2_ci_check_pass` berasal dari kelulusan pengujian CI proyek sendiri.
+- [x] Screenshot `3_branch_protection` menunjukkan proteksi pada halaman PR.
+- [x] Ketiga screenshot masuk ke ZIP proyek.
+- [x] URL aplikasi Vercel dicantumkan pada catatan submission.
+- [x] Minimal satu ecosystem yang memenuhi daftar Dicoding digunakan secara nyata.
+- [x] Fungsionalitas, Bugs Highlighting, dan Arsitektur submission sebelumnya dipertahankan setelah rincian lama diaudit.
+- [x] ZIP memuat source proyek React DOM, tanpa `node_modules` dan tanpa source yang di-minify.
+- [x] Aset yang disertakan digunakan oleh proyek.
 
 ### Saran untuk nilai tinggi
 
-- [ ] Minimal empat pengujian reducer.
-- [ ] Minimal empat pengujian thunk.
-- [ ] Minimal empat pengujian React components.
-- [ ] Minimal dua stories komponen.
-- [ ] Votes thread dan komentar tetap bekerja.
-- [ ] Leaderboard tetap bekerja.
-- [ ] Filter kategori tetap bekerja.
-- [ ] Aplikasi mudah digunakan dan teks terbaca jelas.
-- [ ] Tampilan aplikasi menarik.
-- [ ] Kode modular dan gaya penulisan konsisten.
+- [x] Minimal empat pengujian reducer.
+- [x] Minimal empat pengujian thunk.
+- [x] Minimal empat pengujian React components.
+- [x] Minimal dua stories komponen.
+- [x] Votes thread dan komentar tetap bekerja.
+- [x] Leaderboard tetap bekerja.
+- [x] Filter kategori tetap bekerja.
+- [x] Aplikasi mudah digunakan dan teks terbaca jelas.
+- [x] Tampilan aplikasi menarik.
+- [x] Kode modular dan gaya penulisan konsisten.
 
 ## 7. Acuan untuk melanjutkan agentic coding
 
@@ -271,4 +271,4 @@ forum-diskusi-submission/
 └── SUBMISSION_GUIDE.md
 ```
 
-Catatan submission nantinya perlu memuat URL Vercel yang sebenarnya. URL tersebut belum dicatat karena deployment belum diperiksa pada tugas dokumentasi ini.
+URL produksi telah diverifikasi: https://ruang-diskusi.vercel.app. URL dan hasil pemeriksaan dicatat di `SUBMISSION_NOTES.md`.
