@@ -7,7 +7,7 @@ New-Item -ItemType Directory -Path $artifactDirectory -Force | Out-Null
 $archivePath = Join-Path $artifactDirectory 'forum-diskusi-submission.zip'
 $temporaryArchive = Join-Path $artifactDirectory 'forum-diskusi-submission.pending.zip'
 
-# Explicit source allowlist excludes dependencies, build output, credentials, and unused artwork.
+# Masukkan hanya source, bukti, dan aset yang dipakai aplikasi.
 $directories = @('src', '.github', '.storybook', 'cypress/e2e', 'cypress/fixtures', 'docs', 'screenshots', 'scripts')
 $rootFiles = @(
   'package.json', 'package-lock.json', 'index.html', 'eslint.config.mjs',

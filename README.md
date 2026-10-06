@@ -1,6 +1,8 @@
 # Ruang Diskusi
 
-Aplikasi forum React dari submission sebelumnya, dilanjutkan dengan automation testing, Storybook, dan CI/CD. Fitur aplikasi: registrasi/login, daftar dan detail thread, pembuatan thread, komentar, votes thread/komentar, leaderboard, serta filter kategori.
+Ruang Diskusi adalah forum berbasis React yang dikembangkan dari submission sebelumnya. Pengguna bisa daftar dan login, membuat thread, menulis komentar, memberi vote, melihat peringkat, dan memfilter diskusi berdasarkan kategori.
+
+Submission ini menambahkan pengujian otomatis, Storybook, serta CI/CD. Aplikasi bisa dibuka di [ruang-diskusi.vercel.app](https://ruang-diskusi.vercel.app).
 
 ## Menjalankan proyek
 
@@ -24,7 +26,7 @@ npm run build-storybook
 - `npm test`: Vitest + React Testing Library, termasuk reducer, thunk/store, komponen, API, selector, sanitasi konten, dan redirect aman.
 - `npm run e2e`: menyalakan Vite di `http://127.0.0.1:4173`, menjalankan Cypress, lalu mematikan server. Pastikan port itu tidak sedang dipakai.
 - `npm run e2e:open`: menjalankan Cypress interaktif dengan server yang sama.
-- E2E menguji aplikasi React penuh. Hanya API eksternal di-stub dengan fixture, sehingga tidak membutuhkan akun nyata, credential pribadi, atau perubahan data pada forum Dicoding.
+- Cypress menjalankan alur login di aplikasi. Respons API diganti dengan data pengujian supaya hasilnya konsisten dan tidak perlu memakai akun pribadi.
 - Enam skenario E2E: form kosong, kredensial salah, login berhasil, reload sesi, logout, dan redirect kembali ke halaman terproteksi.
 - Skenario tertulis di bagian awal setiap berkas pengujian.
 - Bila binary Cypress belum tersedia, jalankan `npx cypress install`. Pada Linux, Cypress memerlukan library sistem yang dijelaskan di [panduan instalasi resminya](https://docs.cypress.io/app/get-started/install-cypress). Runner Ubuntu GitHub Actions menyediakan lingkungan browser yang diperlukan.
@@ -50,7 +52,7 @@ Workflow `.github/workflows/ci.yml` berjalan untuk push `master` dan Pull Reques
 
 CD menggunakan integrasi Git Vercel dengan branch produksi `master`. `vercel.json` mengatur build Vite dan fallback SPA, sehingga akses langsung ke `/login`, `/leaderboards`, dan `/threads/:id` dapat dilayani.
 
-Proteksi `master` harus mewajibkan PR dan status `CI` yang lulus. Dengan begitu, perubahan yang gagal pengujian tidak dapat masuk ke branch produksi melalui PR biasa. Konfigurasi eksternal dan bukti sebenarnya dicatat di `SUBMISSION_NOTES.md`.
+Pengerjaan dilakukan di branch `develop`, lalu masuk ke `master` lewat PR. Branch `master` mewajibkan check `CI` yang lulus sebelum PR bisa digabung. Pengaturan dan bukti pengujian ada di `SUBMISSION_NOTES.md`.
 
 ## Pengumpulan
 

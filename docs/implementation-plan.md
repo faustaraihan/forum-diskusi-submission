@@ -1,8 +1,8 @@
 # Rencana implementasi submission automation testing dan CI/CD
 
-Tanggal: 6 Oktober 2026. Acuan: `SUBMISSION_GUIDE.md`. Pengguna telah meminta implementasi dan memilih repository public `faustaraihan/forum-diskusi-submission`.
+Tanggal: 6 Oktober 2026. Acuan: `SUBMISSION_GUIDE.md`. Repository: `faustaraihan/forum-diskusi-submission`.
 
-Tujuan: melanjutkan Ruang Diskusi dengan pengujian yang dapat direproduksi, Storybook, CI GitHub Actions, dan CD Vercel tanpa mengubah desain produk.
+Melanjutkan Ruang Diskusi dengan pengujian otomatis, Storybook, GitHub Actions, dan deployment Vercel. Fitur dan tampilan forum tetap memakai versi sebelumnya.
 
 ## Urutan pengerjaan
 
