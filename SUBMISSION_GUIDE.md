@@ -244,7 +244,7 @@ Checklist diperbarui setelah pengujian lokal, CI GitHub, proteksi branch, deploy
 - [x] Tampilan aplikasi menarik.
 - [x] Kode modular dan gaya penulisan konsisten.
 
-## 7. Acuan untuk melanjutkan agentic coding
+## 7. Catatan untuk pengembangan berikutnya
 
 1. Lanjutkan aplikasi yang ada; gunakan fitur dan test sebelumnya sebagai baseline.
 2. Baca dokumen ini dan status Git terbaru sebelum mengubah codebase.
