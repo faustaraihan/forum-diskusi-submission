@@ -1,3 +1,8 @@
+/**
+ * Skenario pengujian:
+ * - Navigasi mengembalikan scroll dan fokus ke main content.
+ * - Retry pemulihan sesi tidak memperlakukan auth belum pulih sebagai guest.
+ */
 import { it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';

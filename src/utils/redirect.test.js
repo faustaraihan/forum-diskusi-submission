@@ -1,3 +1,8 @@
+/**
+ * Skenario pengujian:
+ * - Path aplikasi dipertahankan setelah login.
+ * - URL eksternal, protokol-relative, path berbahaya, dan loop login/register ditolak.
+ */
 import { describe, it, expect } from 'vitest';
 import { getSafeReturnPath } from './redirect';
 

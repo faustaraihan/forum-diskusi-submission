@@ -1,3 +1,13 @@
+/**
+ * Skenario pengujian:
+ * - Vote baru dipertahankan terhadap respons detail/list lama.
+ * - Vote komentar tetap terpisah dari vote thread.
+ * - Toggle vote memakai endpoint neutral.
+ * - Perpindahan arah tidak menghasilkan vote duplikat.
+ * - Kegagalan rollback hanya vote pengguna aktif.
+ * - Guest tidak mengirim vote; request target pending dideduplikasi.
+ * - Kegagalan dari sesi lama tidak merusak sesi baru.
+ */
 import { describe, it, expect, vi } from 'vitest';
 import { createAppStore } from '../../app/store';
 import api from '../../services/api';

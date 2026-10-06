@@ -1,3 +1,10 @@
+/**
+ * Skenario pengujian:
+ * - Tanpa filter semua thread dan penulis tampil.
+ * - Filter kategori tidak memutasi daftar sumber.
+ * - Kategori unik dan kategori hilang menghasilkan hasil kosong.
+ * - Penulis yang tidak ditemukan memiliki fallback.
+ */
 import { describe, it, expect } from 'vitest';
 import { selectVisibleThreads, selectCategories } from './selectors';
 import { thread, user } from '../../test/fixtures';

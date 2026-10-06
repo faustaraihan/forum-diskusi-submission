@@ -1,0 +1,16 @@
+node_modules
+.git
+.github
+.storybook
+cypress
+docs
+screenshots
+artifacts
+storybook-static
+dist
+**/*.test.js
+**/*.test.jsx
+**/*.stories.jsx
+AGENTS.md
+SUBMISSION_GUIDE.md
+SUBMISSION_NOTES.md

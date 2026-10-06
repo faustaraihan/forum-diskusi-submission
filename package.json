@@ -11,7 +11,11 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run"
+    "test": "vitest run",
+    "e2e": "start-server-and-test \"npm run dev -- --port 4173 --strictPort\" http://127.0.0.1:4173 \"cypress run --browser electron\"",
+    "e2e:open": "start-server-and-test \"npm run dev -- --port 4173 --strictPort\" http://127.0.0.1:4173 \"cypress open\"",
+    "storybook": "storybook dev -p 6006 --host 127.0.0.1 --no-open",
+    "build-storybook": "storybook build --disable-telemetry"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.13.0",
@@ -23,14 +27,19 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@storybook/addon-docs": "10.6.1",
+    "@storybook/react-vite": "10.6.1",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
     "@vitejs/plugin-react": "6.1.1",
+    "cypress": "16.1.1",
     "eslint": "10.12.0",
     "eslint-config-dicodingacademy": "0.9.5",
     "eslint-plugin-react-hooks": "7.1.1",
     "globals": "17.13.0",
     "jsdom": "30.1.2",
+    "start-server-and-test": "3.0.12",
+    "storybook": "10.6.1",
     "vite": "8.3.2",
     "vitest": "5.0.3"
   }

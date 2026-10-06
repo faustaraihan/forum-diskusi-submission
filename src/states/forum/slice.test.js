@@ -1,3 +1,10 @@
+/**
+ * Skenario pengujian:
+ * - Respons detail/error lama diabaikan.
+ * - Request daftar paralel dideduplikasi.
+ * - Thread dari server disimpan dan dipertahankan dari respons daftar lama.
+ * - Komentar memperbarui jumlah dan avatar tanpa masuk ke thread lain.
+ */
 import { describe, it, expect, vi } from 'vitest';
 import reducer from './slice';
 import { loadThread, loadForum, createThread, addComment } from './thunks';

@@ -1,3 +1,10 @@
+/**
+ * Skenario pengujian:
+ * - Markup aman dipertahankan dan script/event executable dihapus.
+ * - HTML menjadi excerpt ringkas dengan batas panjang.
+ * - Konten kosong dan tanggal invalid ditangani.
+ * - Pemisah kata dipertahankan pada line break dan blok editor.
+ */
 import { describe, it, expect } from 'vitest';
 import { sanitizeHtml, toExcerpt } from './content';
 import { formatDate } from './date';
