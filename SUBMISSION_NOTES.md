@@ -24,8 +24,9 @@ Lint, build aplikasi, dan build Storybook berhasil. Storybook berisi tujuh stori
 ## CI dan proteksi branch
 
 - PR implementasi: https://github.com/faustaraihan/forum-diskusi-submission/pull/1
-- CI gagal: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37469129459
-- CI berhasil: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37469820003
+- PR bukti screenshot: https://github.com/faustaraihan/forum-diskusi-submission/pull/4
+- CI gagal pada PR bukti: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37482506512
+- CI berhasil pada PR bukti: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37482895631
 
 Untuk mengambil bukti CI gagal, satu assertion autentikasi sengaja dibuat salah. Run tersebut menghasilkan satu test gagal dan 78 test lulus. Assertion kemudian diperbaiki sebelum PR digabung.
 
@@ -36,6 +37,8 @@ Bukti screenshot ada di:
 - `screenshots/1_ci_check_error.jpg`
 - `screenshots/2_ci_check_pass.jpg`
 - `screenshots/3_branch_protection.jpg`
+
+Ketiga screenshot diambil dari panel checks dan merge pada halaman PR #4, branch `develop` ke `master`. Bukti proteksi menunjukkan label Required pada CI dan tombol merge yang nonaktif saat CI belum selesai. Tampilan GitHub saat ini berbeda dari gambar contoh panduan, tetapi status di screenshot berasal langsung dari PR.
 
 Ketiganya sudah masuk ZIP. Ada juga screenshot halaman login, Storybook, dan aplikasi yang sudah deploy. Kriteria submission sebelumnya dicatat di `docs/previous-submission-audit.md`.
 
