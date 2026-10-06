@@ -6,7 +6,8 @@ Tanggal pengerjaan: 6 Oktober 2026.
 
 - Repository: https://github.com/faustaraihan/forum-diskusi-submission
 - Branch produksi yang ditargetkan: `master`.
-- URL Vercel dan hasil konfigurasi eksternal akan dicatat setelah deployment benar-benar selesai diverifikasi.
+- URL produksi: https://ruang-diskusi.vercel.app
+- Integrasi Git Vercel telah terhubung; verifikasi deployment implementasi dan akses langsung halaman dilakukan setelah PR masuk ke `master`.
 
 ## Implementasi lokal yang telah diperiksa
 
@@ -24,5 +25,6 @@ Tanggal pengerjaan: 6 Oktober 2026.
 - Run tersebut gagal di langkah Unit and component tests, dengan satu assertion auth gagal dan 78 test lain lulus. Assertion sengaja diubah untuk demonstrasi dan kemudian dipulihkan.
 - Proteksi `master` telah diterapkan: wajib PR, required status `CI`, branch harus up-to-date, berlaku juga untuk administrator, force push dan penghapusan branch dilarang, serta percakapan PR harus diselesaikan. Review dari orang lain tidak diwajibkan karena proyek dikerjakan sendiri.
 - Screenshot gagal: `screenshots/1_ci_check_error.jpg`.
-- Run CI lolos dan URL deployment dicatat setelah diverifikasi.
+- Run CI lolos: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37469820003 (79 test Vitest, 6 E2E, lint, build aplikasi, dan build Storybook berhasil).
+- Screenshot lolos: `screenshots/2_ci_check_pass.jpg`; proteksi PR: `screenshots/3_branch_protection.jpg`.
 - Rincian kriteria submission sebelumnya sudah dibaca ulang dan diaudit dalam `docs/previous-submission-audit.md`.
