@@ -1,3 +1,11 @@
+/**
+ * Skenario pengujian:
+ * - Payload JSON terautentikasi dan respons komentar diproses.
+ * - HTTP 401 dipertahankan untuk auth.
+ * - Status aplikasi gagal tetap ditolak meskipun HTTP sukses.
+ * - Gangguan jaringan tidak dianggap auth gagal.
+ * - Neutral vote komentar memakai endpoint yang tepat tanpa body.
+ */
 import { describe, it, expect, vi } from 'vitest';
 import api, { ApiError } from './api';
 import { setToken } from './token';

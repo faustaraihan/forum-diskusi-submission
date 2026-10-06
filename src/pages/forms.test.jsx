@@ -1,3 +1,12 @@
+/**
+ * Skenario pengujian:
+ * - Password register pendek ditolak tanpa request.
+ * - Login gagal mempertahankan email dan tombol retry.
+ * - Isi thread kosong ditolak.
+ * - Thread baru memakai ID server dan mencegah submit ganda.
+ * - Thread gagal mempertahankan isi.
+ * - Komentar gagal dipertahankan dan dibersihkan setelah retry sukses.
+ */
 import { it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';

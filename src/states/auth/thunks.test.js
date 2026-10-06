@@ -1,3 +1,13 @@
+/**
+ * Skenario pengujian:
+ * - Guest startup tidak meminta profil.
+ * - Token valid memulihkan profil; token expired dihapus.
+ * - Gangguan jaringan mempertahankan token agar bisa dicoba ulang.
+ * - Bootstrap dideduplikasi.
+ * - Login menyimpan token/profil tanpa password; kegagalan tidak menyimpan kredensial.
+ * - Register tidak membuat sesi login.
+ * - Respons sesi lama tidak menghapus token sesi baru.
+ */
 import { describe, it, expect, vi } from 'vitest';
 import { createAppStore } from '../../app/store';
 import api, { ApiError } from '../../services/api';
