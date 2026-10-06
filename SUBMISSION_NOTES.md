@@ -19,4 +19,10 @@ Tanggal pengerjaan: 6 Oktober 2026.
 
 ## Bukti eksternal
 
-Pencatatan run CI gagal, run CI lolos, branch protection, dan deployment dilakukan setelah verifikasi layanan tersebut. Jangan menganggap konfigurasi workflow lokal sebagai bukti bahwa CI/CD sudah berjalan.
+- PR implementasi: https://github.com/faustaraihan/forum-diskusi-submission/pull/1
+- Run bukti CI gagal: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37469129459
+- Run tersebut gagal di langkah Unit and component tests, dengan satu assertion auth gagal dan 78 test lain lulus. Assertion sengaja diubah untuk demonstrasi dan kemudian dipulihkan.
+- Proteksi `master` telah diterapkan: wajib PR, required status `CI`, branch harus up-to-date, berlaku juga untuk administrator, force push dan penghapusan branch dilarang, serta percakapan PR harus diselesaikan. Review dari orang lain tidak diwajibkan karena proyek dikerjakan sendiri.
+- Screenshot gagal: `screenshots/1_ci_check_error.jpg`.
+- Run CI lolos dan URL deployment dicatat setelah diverifikasi.
+- Rincian kriteria submission sebelumnya sudah dibaca ulang dan diaudit dalam `docs/previous-submission-audit.md`.

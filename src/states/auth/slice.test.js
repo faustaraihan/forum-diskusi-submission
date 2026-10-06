@@ -21,8 +21,7 @@ describe('auth reducer', () => {
   it('makes the returned profile available after successful login', () => {
     const pending = reducer(undefined, login.pending('r1'));
     const state = reducer(pending, login.fulfilled(user, 'r1'));
-    // Demonstrasi bukti CI gagal: nilai sengaja salah, dipulihkan setelah screenshot.
-    expect(state).toMatchObject({ user, initialized: true, status: 'succeeded', requestId: null, session: 2 });
+    expect(state).toMatchObject({ user, initialized: true, status: 'succeeded', requestId: null, session: 1 });
   });
 
   it('ignores a profile response belonging to an older request', () => {
