@@ -52,13 +52,4 @@ Workflow `.github/workflows/ci.yml` berjalan untuk push `master` dan Pull Reques
 
 CD menggunakan integrasi Git Vercel dengan branch produksi `master`. `vercel.json` mengatur build Vite dan fallback SPA, sehingga akses langsung ke `/login`, `/leaderboards`, dan `/threads/:id` dapat dilayani.
 
-Pengerjaan dilakukan di branch `develop`, lalu masuk ke `master` lewat PR. Branch `master` mewajibkan check `CI` yang lulus sebelum PR bisa digabung. Pengaturan dan bukti pengujian ada di `SUBMISSION_NOTES.md`.
-
-## Pengumpulan
-
-- Acuan lengkap: `SUBMISSION_GUIDE.md`.
-- URL deployment dan bukti: `SUBMISSION_NOTES.md`.
-- Sertakan `screenshots/1_ci_check_error.jpg`, `screenshots/2_ci_check_pass.jpg`, dan `screenshots/3_branch_protection.jpg` dari proyek ini.
-- ZIP berisi source, konfigurasi, lockfile, aset yang digunakan, dan screenshot bukti.
-- Jangan sertakan `node_modules/`, `.git/`, `.vercel/`, `dist/`, `storybook-static/`, secret, atau output JavaScript yang di-minify.
-- Gambar contoh pada panduan Dicoding bukan bukti proyek ini.
+Pengerjaan dilakukan di branch `develop`, lalu masuk ke `master` lewat PR. Branch `master` mewajibkan check `CI` yang lulus dan satu approval dari reviewer sebelum PR bisa digabung. Aturan ini juga berlaku untuk administrator.
