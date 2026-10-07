@@ -272,3 +272,7 @@ forum-diskusi-submission/
 ```
 
 URL produksi telah diverifikasi: https://ruang-diskusi.vercel.app. URL dan hasil pemeriksaan dicatat di `SUBMISSION_NOTES.md`.
+
+## Revisi bukti proteksi — 7 Oktober 2026
+
+Reviewer menolak bukti proteksi sebelumnya karena screenshot belum menunjukkan implementasi dengan jelas. Latihan proteksi branch pada tutorial 29015 telah dibaca; konfigurasi PR dan required CI sudah aktif. Proteksi kini juga mewajibkan satu approval dan tetap berlaku untuk administrator. Screenshot 3 diperbarui dari PR #5: checks lulus tetapi merge terblokir karena approval belum ada. Bukti teknis ini sudah diverifikasi; penerimaan submission ulang masih menunggu penilaian reviewer.
