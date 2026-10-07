@@ -38,7 +38,7 @@ Bukti screenshot ada di:
 - `screenshots/2_ci_check_pass.jpg`
 - `screenshots/3_branch_protection.jpg`
 
-Screenshot CI gagal dan lolos berasal dari PR #4. Screenshot proteksi diperbarui dari PR #5 setelah feedback reviewer: Review required, All checks have passed, CI Required, Merging is blocked, serta tombol merge nonaktif. Screenshot ini menunjukkan merge tetap diblokir setelah CI lulus karena belum ada satu approval. PR #5: https://github.com/faustaraihan/forum-diskusi-submission/pull/5. CI pada saat pengambilan bukti: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37573806893.
+Screenshot CI gagal dan lolos berasal dari PR #4. Screenshot proteksi diperbarui dari PR #5 setelah feedback reviewer: Review required, All checks have passed, CI Required, Merging is blocked, serta tombol merge nonaktif. Screenshot ini menunjukkan merge tetap diblokir setelah CI lulus karena belum ada satu approval. PR #5: https://github.com/faustaraihan/forum-diskusi-submission/pull/5. CI pada saat pengambilan bukti: https://github.com/faustaraihan/forum-diskusi-submission/actions/runs/37573963117.
 
 Ketiganya sudah masuk ZIP. Ada juga screenshot halaman login, Storybook, dan aplikasi yang sudah deploy. Kriteria submission sebelumnya dicatat di `docs/previous-submission-audit.md`.
 
